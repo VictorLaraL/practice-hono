@@ -1,6 +1,7 @@
 import { drizzle } from 'drizzle-orm/d1';
 import { assistant } from '../db/schema';
 import { Hono } from 'hono'
+import { zAssistant } from '../middlewares/validator'
 
 
 type Env = {
@@ -21,7 +22,7 @@ api_assistant
         );
       }
     })
-    .post('/assistant/', async (c) => {
+    .post('/assistant/', zAssistant, async (c) => {
       const body = await c.req.json()
       const new_assistant = {
         full_name: body.full_name as string,
