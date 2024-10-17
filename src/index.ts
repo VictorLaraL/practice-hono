@@ -1,4 +1,6 @@
 import { Hono } from 'hono'
+import { api_song } from './views/song'
+import { api_assistant } from './views/assistant'
 
 type Env = {
   MY_VAR: string
@@ -14,5 +16,8 @@ app.get('/', (c) => {
     "VAR": c.env.MY_VAR
   })
 })
+
+app.route('/', api_song)
+app.route('/', api_assistant)
 
 export default app
