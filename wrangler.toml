@@ -25,3 +25,8 @@ database_id = "006a54eb-b6be-4882-8642-07bc62a3dfca"
 # [observability]
 # enabled = true
 # head_sampling_rate = 1
+
+# wrangler.toml (wrangler v3.79.0^)
+[observability]
+enabled = true
+head_sampling_rate = 1
