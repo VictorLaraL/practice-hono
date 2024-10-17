@@ -1,23 +1,22 @@
 import { Hono } from 'hono'
 import { api_song } from './views/song'
 import { api_assistant } from './views/assistant'
+import { bearerAuth } from 'hono/bearer-auth';
 
 type Env = {
-  MY_VAR: string
+  TOKEN_API: string
 }
 
 // Declaramos la instancia principal y le pasamos las variables de entorno
 // que declaramos anteriormente en el archivo wrangler.toml
 const app = new Hono<{Bindings: Env}>()
 
-app.get('/', (c) => {
-  return c.json({
-    "Hello": "World",
-    "VAR": c.env.MY_VAR
-  })
+app.use('/api/*', (c, next) => {
+    const tokenMiddleware = bearerAuth({ token: c.env.TOKEN_API })
+    return tokenMiddleware(c, next)
 })
 
-app.route('/', api_song)
-app.route('/', api_assistant)
+app.route('/api/', api_song)
+app.route('/api/', api_assistant)
 
 export default app
